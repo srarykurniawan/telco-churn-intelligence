@@ -1,0 +1,115 @@
+# =============================================================================
+# Telco Churn & Revenue Intelligence — central configuration
+# Semua path relatif terhadap root project. Override via env TELCO_CONFIG.
+# =============================================================================
+project:
+  name: telco-churn-intelligence
+  seed: 42
+
+paths:
+  raw_data: data/raw/customers.csv
+  timeseries_data: data/raw/monthly_kpi.csv
+  incoming_dir: data/incoming
+  data_manifest: data/versions/manifest.json
+  registry_dir: models/registry
+  monitoring_dir: monitoring
+  reports_dir: reports
+
+data:
+  n_customers: 20000
+  target_churn_rate: 0.20        # churn dalam 90 hari ke depan
+  campaign_treatment_rate: 0.35  # porsi pelanggan yang menerima kampanye (RCT)
+  start_month: "2021-10"
+  n_months: 60
+  max_training_rows: 60000       # sliding window saat retraining
+
+features:
+  id_col: customer_id
+  target: churn
+  numeric:
+    - tenure_months
+    - age
+    - monthly_charge_idr
+    - arpu_idr
+    - data_usage_gb
+    - voice_minutes
+    - sms_count
+    - network_quality_score
+    - avg_call_drop_rate
+    - num_complaints
+    - days_since_last_topup
+    - usage_change_pct
+    - nps_score
+  categorical:
+    - region
+    - plan_type
+    - package
+    - contract_type
+    - payment_method
+    - device_type
+    - has_streaming_addon
+    - campaign_type
+  # Fitur yang dikeluarkan untuk model regresi ARPU (mencegah target leakage)
+  arpu_exclude:
+    - arpu_idr
+    - revenue_per_gb
+
+split:
+  test_size: 0.20
+  val_size: 0.15
+
+churn_model:
+  hidden_dims: [128, 64, 32]
+  dropout: 0.25
+  lr: 0.001
+  weight_decay: 0.00001
+  batch_size: 256
+  max_epochs: 60
+  patience: 8
+  use_class_weight: false   # false = probabilitas tetap terkalibrasi untuk CLV & expected value
+
+arpu_model:
+  hidden_dims: [64, 32]
+  dropout: 0.10
+  lr: 0.002
+  weight_decay: 0.00001
+  batch_size: 256
+  max_epochs: 80
+  patience: 10
+
+forecast:
+  targets: [revenue_idr_bn, active_subscribers]
+  window: 12
+  horizon: 6
+  hidden_size: 32
+  num_layers: 1
+  epochs: 400
+  lr: 0.005
+
+segmentation:
+  k_min: 3
+  k_max: 7
+  sample_size: 6000
+  features: [arpu_idr, data_usage_gb, voice_minutes, tenure_months, num_complaints, nps_score, days_since_last_topup]
+  log_features: [arpu_idr, data_usage_gb, voice_minutes, tenure_months]
+
+business:
+  gross_margin: 0.55
+  retention_horizon_months: 12      # nilai pelanggan yang diselamatkan = ARPU x margin x horizon
+  max_lifetime_months: 60
+  retention_offer_cost_idr: 50000   # biaya penawaran + kontak per pelanggan (untuk optimasi threshold)
+  retention_success_rate: 0.25      # peluang pelanggan berisiko berhasil dipertahankan
+  campaign_cost_idr:
+    Discount: 25000
+    Bonus Data: 12000
+    Loyalty Points: 8000
+
+monitoring:
+  psi_warning: 0.10
+  psi_threshold: 0.20
+  min_drifted_features: 2
+  auc_drop_threshold: 0.05
+  max_model_age_days: 90
+  min_new_samples: 1000
+  promotion_tolerance: 0.005        # challenger dipromosikan jika AUC >= champion - toleransi
+  default_batch_size: 5000

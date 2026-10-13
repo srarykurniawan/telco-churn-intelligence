@@ -1,0 +1,66 @@
+{
+  "datasets": {
+    "customers": [
+      {
+        "version_id": "customers@v1",
+        "version": 1,
+        "sha256": "2ab1bf9a463154251d70ec6f1cbde91c52d4242afce9c5b891772997f30c08fe",
+        "path": "data/raw/customers.csv",
+        "rows": 20000,
+        "columns": [
+          "customer_id",
+          "region",
+          "plan_type",
+          "package",
+          "contract_type",
+          "payment_method",
+          "device_type",
+          "has_streaming_addon",
+          "tenure_months",
+          "age",
+          "monthly_charge_idr",
+          "arpu_idr",
+          "data_usage_gb",
+          "voice_minutes",
+          "sms_count",
+          "network_quality_score",
+          "avg_call_drop_rate",
+          "num_complaints",
+          "days_since_last_topup",
+          "usage_change_pct",
+          "nps_score",
+          "campaign_type",
+          "campaign_accepted",
+          "churn"
+        ],
+        "created_at": "2026-10-13T12:42:39+00:00",
+        "description": "customer snapshot used for training",
+        "target_rate": 0.1986
+      }
+    ],
+    "monthly_kpi": [
+      {
+        "version_id": "monthly_kpi@v1",
+        "version": 1,
+        "sha256": "19f7ead540bb70a7d607d7c2b72bf76a8de757923bfcab7b363ff82b0bcfc773",
+        "path": "data/raw/monthly_kpi.csv",
+        "rows": 60,
+        "columns": [
+          "month",
+          "active_subscribers",
+          "new_subscribers",
+          "churned_subscribers",
+          "churn_rate",
+          "arpu_idr",
+          "revenue_idr_bn",
+          "avg_data_per_user_gb",
+          "data_traffic_pb",
+          "nps",
+          "is_lebaran"
+        ],
+        "created_at": "2026-10-13T12:42:39+00:00",
+        "description": "monthly company KPIs"
+      }
+    ]
+  }
+}

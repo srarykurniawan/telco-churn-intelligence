@@ -1,0 +1,24 @@
+# Optional: reproduce the pipeline with DVC (`pip install dvc && dvc repro`).
+# The project already versions data via a SHA-256 manifest (src/telco/data/versioning.py);
+# DVC adds remote storage (S3/GCS/GDrive) for large datasets and models.
+stages:
+  train:
+    cmd: python -m telco.pipelines.train
+    deps:
+      - src/telco
+      - config/config.yaml
+      - data/raw/customers.csv
+      - data/raw/monthly_kpi.csv
+    outs:
+      - models/registry:
+          persist: true
+    metrics:
+      - reports/training_summary.json:
+          cache: false
+  monitor:
+    cmd: python -m telco.pipelines.monitor --scenario mild
+    deps:
+      - models/registry
+    metrics:
+      - monitoring/latest_report.json:
+          cache: false

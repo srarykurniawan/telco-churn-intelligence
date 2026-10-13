@@ -1,0 +1,35 @@
+{
+  "numeric": [
+    "tenure_months",
+    "age",
+    "monthly_charge_idr",
+    "arpu_idr",
+    "data_usage_gb",
+    "voice_minutes",
+    "sms_count",
+    "network_quality_score",
+    "avg_call_drop_rate",
+    "num_complaints",
+    "days_since_last_topup",
+    "usage_change_pct",
+    "nps_score",
+    "revenue_per_gb",
+    "complaint_rate"
+  ],
+  "categorical": [
+    "region",
+    "plan_type",
+    "package",
+    "contract_type",
+    "payment_method",
+    "device_type",
+    "has_streaming_addon",
+    "campaign_type"
+  ],
+  "target_transform": null,
+  "threshold": 0.38999999999999996,
+  "framework": "pytorch",
+  "clv_p75": 2145244.1660680873,
+  "train_rows": 13000,
+  "data_version": "customers@v1"
+}

@@ -1,0 +1,12 @@
+# CPU-only PyTorch wheels (≈200 MB instead of ≈2.5 GB CUDA build) — required on Streamlit Community Cloud.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.3
+numpy>=1.26
+pandas>=2.2
+scipy>=1.12
+scikit-learn>=1.4
+statsmodels>=0.14.2
+plotly>=5.22
+streamlit>=1.50
+pyyaml>=6.0
+joblib>=1.3

@@ -1,0 +1,50 @@
+name: Scheduled monitoring & retraining
+
+on:
+  schedule:
+    - cron: "0 1 * * 1"          # every Monday 08:00 WIB
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: "Simulated drift scenario (replace with a real labelled batch in production)"
+        type: choice
+        options: [none, mild, severe]
+        default: mild
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Monitor production model (auto-retrain on trigger)
+        id: monitor
+        env:
+          PYTHONPATH: src
+        run: python -m telco.pipelines.monitor --scenario "${{ inputs.scenario || 'mild' }}" --auto-retrain
+
+      - name: Upload monitoring report
+        uses: actions/upload-artifact@v4
+        with:
+          name: monitoring-report
+          path: monitoring/
+
+      - name: Commit monitoring history & new model versions
+        run: |
+          git config user.name  "mlops-bot"
+          git config user.email "mlops-bot@users.noreply.github.com"
+          git add monitoring models/registry data/raw data/versions reports || true
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "mlops: monitoring run (severity=${{ steps.monitor.outputs.severity }}, retrained=${{ steps.monitor.outputs.retrained }})"
+            git push
+          fi

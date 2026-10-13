@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -r requirements-dev.txt
+      - name: Lint
+        run: ruff check src app tests
+      - name: Unit & integration tests
+        run: pytest --cov=telco --cov-report=term-missing
+      - name: Smoke test Streamlit pages
+        run: |
+          python - <<'EOF'
+          import glob, os, sys
+          from streamlit.testing.v1 import AppTest
+          failed = False
+          for p in ["app/Home.py"] + sorted(glob.glob("app/pages/*.py")):
+              at = AppTest.from_file(os.path.abspath(p), default_timeout=600).run()
+              print(p, "exceptions:", len(at.exception))
+              for e in at.exception:
+                  print("  ", e.value); failed = True
+          sys.exit(1 if failed else 0)
+          EOF
