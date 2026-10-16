@@ -4,9 +4,9 @@
       {
         "name": "churn_model",
         "version": 1,
-        "stage": "Production",
+        "stage": "Staging",
         "created_at": "2026-10-13T12:42:55+00:00",
-        "updated_at": "2026-10-13T12:42:55+00:00",
+        "updated_at": "2026-10-15T07:50:55+00:00",
         "metrics": {
           "test_roc_auc": 0.7548500279633827,
           "test_pr_auc": 0.47408781138985656,
@@ -60,6 +60,73 @@
             "at": "2026-10-13T12:42:55+00:00",
             "stage": "Production",
             "reason": "first production model"
+          },
+          {
+            "at": "2026-10-15T07:50:55+00:00",
+            "stage": "Staging",
+            "reason": "manual via Streamlit UI"
+          }
+        ]
+      },
+      {
+        "name": "churn_model",
+        "version": 2,
+        "stage": "Production",
+        "created_at": "2026-10-15T07:52:29+00:00",
+        "updated_at": "2026-10-15T07:52:30+00:00",
+        "metrics": {
+          "test_roc_auc": 0.7541734122195076,
+          "test_pr_auc": 0.47306635849284684,
+          "test_f1": 0.44176706827309237,
+          "test_precision": 0.4721030042918455,
+          "test_recall": 0.41509433962264153,
+          "test_accuracy": 0.7915,
+          "test_brier": 0.13601315776832518,
+          "test_log_loss": 0.42945414682704386,
+          "test_ks": 0.37334549985773013,
+          "test_threshold": 0.39999999999999997,
+          "test_tp": 330,
+          "test_fp": 369,
+          "test_tn": 2836,
+          "test_fn": 465,
+          "baseline_logreg_roc_auc": 0.7630192603930572,
+          "baseline_logreg_pr_auc": 0.48367703107754556,
+          "baseline_logreg_f1": 0.33455882352941174,
+          "baseline_logreg_brier": 0.1329509653290626,
+          "val_roc_auc": 0.7566234687154518
+        },
+        "params": {
+          "hidden_dims": [
+            128,
+            64,
+            32
+          ],
+          "dropout": 0.25,
+          "lr": 0.001,
+          "weight_decay": 1e-05,
+          "batch_size": 256,
+          "max_epochs": 60,
+          "patience": 8,
+          "use_class_weight": false,
+          "threshold": 0.39999999999999997,
+          "n_features_encoded": 45,
+          "framework": "pytorch"
+        },
+        "data_version": "customers@v1",
+        "description": "PyTorch MLP churn classifier (90-day churn)",
+        "tags": {},
+        "git_commit": "789bd41",
+        "artifact_path": "churn_model/v2",
+        "history": [
+          {
+            "at": "2026-10-15T07:52:29+00:00",
+            "stage": "Staging",
+            "reason": ""
+          },
+          {
+            "at": "2026-10-15T07:52:30+00:00",
+            "stage": "Production",
+            "reason": "first production model"
           }
         ]
       }
@@ -68,9 +135,9 @@
       {
         "name": "arpu_regressor",
         "version": 1,
-        "stage": "Production",
+        "stage": "Archived",
         "created_at": "2026-10-13T12:43:22+00:00",
-        "updated_at": "2026-10-13T12:43:22+00:00",
+        "updated_at": "2026-10-15T07:54:26+00:00",
         "metrics": {
           "test_rmse": 6810.304929504248,
           "test_mae": 4223.557688728397,
@@ -109,6 +176,59 @@
             "at": "2026-10-13T12:43:22+00:00",
             "stage": "Production",
             "reason": "first production model"
+          },
+          {
+            "at": "2026-10-15T07:54:26+00:00",
+            "stage": "Archived",
+            "reason": "superseded by v2"
+          }
+        ]
+      },
+      {
+        "name": "arpu_regressor",
+        "version": 2,
+        "stage": "Production",
+        "created_at": "2026-10-15T07:54:25+00:00",
+        "updated_at": "2026-10-15T07:54:26+00:00",
+        "metrics": {
+          "test_rmse": 7071.676924839693,
+          "test_mae": 4273.39705930637,
+          "test_mape": 4.9220102130703705,
+          "test_r2": 0.9913528088011372,
+          "baseline_linreg_rmse": 30468.62051159162,
+          "baseline_linreg_mae": 14963.168518554687,
+          "baseline_linreg_mape": 12.00262551891197,
+          "baseline_linreg_r2": 0.8394775341738098,
+          "champion_score_same_holdout": 0.9919802031652891
+        },
+        "params": {
+          "hidden_dims": [
+            64,
+            32
+          ],
+          "dropout": 0.1,
+          "lr": 0.002,
+          "weight_decay": 1e-05,
+          "batch_size": 256,
+          "max_epochs": 80,
+          "patience": 10,
+          "target_transform": "log1p"
+        },
+        "data_version": "customers@v1",
+        "description": "PyTorch MLP regressor for monthly ARPU",
+        "tags": {},
+        "git_commit": "789bd41",
+        "artifact_path": "arpu_regressor/v2",
+        "history": [
+          {
+            "at": "2026-10-15T07:54:25+00:00",
+            "stage": "Staging",
+            "reason": ""
+          },
+          {
+            "at": "2026-10-15T07:54:26+00:00",
+            "stage": "Production",
+            "reason": "challenger 0.9914 vs champion 0.9920"
           }
         ]
       }
@@ -117,9 +237,9 @@
       {
         "name": "customer_segmentation",
         "version": 1,
-        "stage": "Production",
+        "stage": "Archived",
         "created_at": "2026-10-13T12:43:26+00:00",
-        "updated_at": "2026-10-13T12:43:26+00:00",
+        "updated_at": "2026-10-15T07:54:34+00:00",
         "metrics": {
           "k": 3,
           "silhouette": 0.17379948526806244,
@@ -159,6 +279,59 @@
             "at": "2026-10-13T12:43:26+00:00",
             "stage": "Production",
             "reason": ""
+          },
+          {
+            "at": "2026-10-15T07:54:34+00:00",
+            "stage": "Archived",
+            "reason": "superseded by v2"
+          }
+        ]
+      },
+      {
+        "name": "customer_segmentation",
+        "version": 2,
+        "stage": "Production",
+        "created_at": "2026-10-15T07:54:34+00:00",
+        "updated_at": "2026-10-15T07:54:34+00:00",
+        "metrics": {
+          "k": 3,
+          "silhouette": 0.17379948526806244,
+          "silhouette_k3": 0.17379948526806244,
+          "silhouette_k4": 0.16594049747054707,
+          "silhouette_k5": 0.13585364359040644,
+          "silhouette_k6": 0.127413352706384,
+          "silhouette_k7": 0.12950355554725695
+        },
+        "params": {
+          "k_min": 3,
+          "k_max": 7,
+          "sample_size": 6000,
+          "features": [
+            "arpu_idr",
+            "data_usage_gb",
+            "voice_minutes",
+            "tenure_months",
+            "num_complaints",
+            "nps_score",
+            "days_since_last_topup"
+          ],
+          "log_features": [
+            "arpu_idr",
+            "data_usage_gb",
+            "voice_minutes",
+            "tenure_months"
+          ]
+        },
+        "data_version": "customers@v1",
+        "description": "K-Means behavioural segmentation",
+        "tags": {},
+        "git_commit": "789bd41",
+        "artifact_path": "customer_segmentation/v2",
+        "history": [
+          {
+            "at": "2026-10-15T07:54:34+00:00",
+            "stage": "Production",
+            "reason": ""
           }
         ]
       }
@@ -167,9 +340,9 @@
       {
         "name": "forecast_revenue_idr_bn",
         "version": 1,
-        "stage": "Production",
+        "stage": "Archived",
         "created_at": "2026-10-13T12:43:30+00:00",
-        "updated_at": "2026-10-13T12:43:30+00:00",
+        "updated_at": "2026-10-15T07:54:43+00:00",
         "metrics": {
           "backtest_lstm_rmse": 12.031519080730282,
           "backtest_lstm_mae": 11.277629628646594,
@@ -204,6 +377,54 @@
             "at": "2026-10-13T12:43:30+00:00",
             "stage": "Production",
             "reason": ""
+          },
+          {
+            "at": "2026-10-15T07:54:43+00:00",
+            "stage": "Archived",
+            "reason": "superseded by v2"
+          }
+        ]
+      },
+      {
+        "name": "forecast_revenue_idr_bn",
+        "version": 2,
+        "stage": "Production",
+        "created_at": "2026-10-15T07:54:43+00:00",
+        "updated_at": "2026-10-15T07:54:43+00:00",
+        "metrics": {
+          "backtest_lstm_rmse": 12.028767844439631,
+          "backtest_lstm_mae": 11.282119936080846,
+          "backtest_lstm_mape": 1.3037479529857814,
+          "backtest_seasonal_naive_rmse": 9.383717102882896,
+          "backtest_seasonal_naive_mae": 8.153513414702863,
+          "backtest_seasonal_naive_mape": 0.9450599620390375,
+          "backtest_holt_winters_rmse": 13.27281000509161,
+          "backtest_holt_winters_mae": 10.794515269492953,
+          "backtest_holt_winters_mape": 1.2569453736205427
+        },
+        "params": {
+          "targets": [
+            "revenue_idr_bn",
+            "active_subscribers"
+          ],
+          "window": 12,
+          "horizon": 6,
+          "hidden_size": 32,
+          "num_layers": 1,
+          "epochs": 400,
+          "lr": 0.005,
+          "target": "revenue_idr_bn"
+        },
+        "data_version": "monthly_kpi@v1",
+        "description": "LSTM monthly forecaster for revenue_idr_bn",
+        "tags": {},
+        "git_commit": "789bd41",
+        "artifact_path": "forecast_revenue_idr_bn/v2",
+        "history": [
+          {
+            "at": "2026-10-15T07:54:43+00:00",
+            "stage": "Production",
+            "reason": ""
           }
         ]
       }
@@ -212,9 +433,9 @@
       {
         "name": "forecast_active_subscribers",
         "version": 1,
-        "stage": "Production",
+        "stage": "Archived",
         "created_at": "2026-10-13T12:43:34+00:00",
-        "updated_at": "2026-10-13T12:43:34+00:00",
+        "updated_at": "2026-10-15T07:54:54+00:00",
         "metrics": {
           "backtest_lstm_rmse": 41970.929854575996,
           "backtest_lstm_mae": 30825.013823378522,
@@ -247,6 +468,54 @@
         "history": [
           {
             "at": "2026-10-13T12:43:34+00:00",
+            "stage": "Production",
+            "reason": ""
+          },
+          {
+            "at": "2026-10-15T07:54:54+00:00",
+            "stage": "Archived",
+            "reason": "superseded by v2"
+          }
+        ]
+      },
+      {
+        "name": "forecast_active_subscribers",
+        "version": 2,
+        "stage": "Production",
+        "created_at": "2026-10-15T07:54:54+00:00",
+        "updated_at": "2026-10-15T07:54:54+00:00",
+        "metrics": {
+          "backtest_lstm_rmse": 42589.4363210251,
+          "backtest_lstm_mae": 30535.426168244023,
+          "backtest_lstm_mape": 0.19372026034991402,
+          "backtest_seasonal_naive_rmse": 82426.68139551743,
+          "backtest_seasonal_naive_mae": 71007.76527901243,
+          "backtest_seasonal_naive_mape": 0.45193167060233247,
+          "backtest_holt_winters_rmse": 92495.32268251394,
+          "backtest_holt_winters_mae": 74873.52994127572,
+          "backtest_holt_winters_mape": 0.478893024372438
+        },
+        "params": {
+          "targets": [
+            "revenue_idr_bn",
+            "active_subscribers"
+          ],
+          "window": 12,
+          "horizon": 6,
+          "hidden_size": 32,
+          "num_layers": 1,
+          "epochs": 400,
+          "lr": 0.005,
+          "target": "active_subscribers"
+        },
+        "data_version": "monthly_kpi@v1",
+        "description": "LSTM monthly forecaster for active_subscribers",
+        "tags": {},
+        "git_commit": "789bd41",
+        "artifact_path": "forecast_active_subscribers/v2",
+        "history": [
+          {
+            "at": "2026-10-15T07:54:54+00:00",
             "stage": "Production",
             "reason": ""
           }
