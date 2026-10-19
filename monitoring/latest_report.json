@@ -1,0 +1,51 @@
+{
+  "timestamp": "2026-10-19T05:53:40+00:00",
+  "batch": "batch_20261019055340_mild.csv",
+  "n_rows": 5000,
+  "model": "churn_model",
+  "model_version": 2,
+  "n_drifted_features": 1,
+  "n_warning_features": 0,
+  "score_psi": 0.0933169384554233,
+  "ref_mean_score": 0.2076691037529754,
+  "cur_mean_score": 0.2640421076939104,
+  "ks_p_value": 3.782843873835595e-42,
+  "reference_auc": 0.7541734122195076,
+  "current_auc": 0.7694215456969946,
+  "current_churn_rate": 0.2758,
+  "reference_churn_rate": 0.2002,
+  "model_age_days": 3.92,
+  "decision": {
+    "retrain": false,
+    "severity": "ok",
+    "reasons": [],
+    "checks": {
+      "data_drift": {
+        "triggered": false,
+        "value": 1,
+        "rule": "\u2265 2 fitur PSI \u2265 0.2"
+      },
+      "prediction_drift": {
+        "triggered": false,
+        "value": 0.0933,
+        "rule": "PSI skor \u2265 0.2"
+      },
+      "performance_decay": {
+        "triggered": false,
+        "value": -0.0152,
+        "rule": "penurunan AUC \u2265 0.05"
+      },
+      "staleness": {
+        "triggered": false,
+        "value": 3.9,
+        "rule": "umur model \u2265 90 hari"
+      },
+      "enough_new_data": {
+        "triggered": true,
+        "value": 5000,
+        "rule": "\u2265 1000 sampel berlabel"
+      }
+    }
+  },
+  "validation_warnings": []
+}

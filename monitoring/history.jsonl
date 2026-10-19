@@ -1,0 +1,1 @@
+{"timestamp": "2026-10-19T05:53:40+00:00", "batch": "batch_20261019055340_mild.csv", "n_rows": 5000, "model_version": 2, "n_drifted_features": 1, "score_psi": 0.0933169384554233, "current_auc": 0.7694215456969946, "reference_auc": 0.7541734122195076, "current_churn_rate": 0.2758, "retrain": false, "severity": "ok"}
